@@ -15,7 +15,13 @@ class CreateKategorisTable extends Migration
     {
         Schema::create('kategoris', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->bigInteger('kelas_id')->unsigned();
+            $table->string('kelas');
+
+            $table->foreign('kelas_id')->references('id')
+            ->on('destinasis')->onUpdate('cascade')
+            ->onDelete('cascade');
+        $table->timestamps();
         });
     }
 

@@ -17,6 +17,7 @@ class CreateWisatasTable extends Migration
             $table->id();
             $table->string('nama_provinsi');
             $table->string('nama_kota');
+            $table->string('alamat');
             $table->text('desc');
             $table->timestamps();
         });
