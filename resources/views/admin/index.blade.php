@@ -1,12 +1,9 @@
 @extends('layouts.admin')
-@extends('header')
-@endsection
-
+@section('header')
 <div class="content-headear">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-md-12">
-                <h3 class="m-0">Admin Dashboard</h3>
             </div>
         </div>
     </div>
@@ -18,6 +15,7 @@
     <div class="row">
         <div class="col">
             <div class="card">
+                <center><div class="card-header"><b>Sistem Informasi Wisata</b></div></center>
                 <div class="card-header">Admin Page</div>
                 <div class="card-body">
                     Welcome back <strong>Admin</strong>

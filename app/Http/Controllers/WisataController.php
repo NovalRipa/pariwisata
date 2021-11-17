@@ -15,6 +15,8 @@ class WisataController extends Controller
     public function index()
     {
         //
+        $wisata = Wisata::all();
+        return view('admin.wisata.index', compact('wisata'));
     }
 
     /**
@@ -25,6 +27,7 @@ class WisataController extends Controller
     public function create()
     {
         //
+        return view('admin.wisata.create');
     }
 
     /**
@@ -35,51 +38,82 @@ class WisataController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nama_wisata' => 'required',
+            'nama_wisata' => 'required',
+            'harga' => 'required',
+        ]);
+
+        $wisata = new Wisata;
+        $wisata->nama_wisata = $request->nama_wisata;
+        $wisata->harga = $request->harga;
+        $wisata->alamat = $request->alamat;
+        $wisata->save();
+        return redirect()->route('wisata.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\wisata  $wisata
+     * @param  \App\Models\Wisata  $wisata
      * @return \Illuminate\Http\Response
      */
-    public function show(wisata $wisata)
+    public function show($id)
     {
         //
+        $wisata = Wisata::findOrFail($id);
+        return view('admin.wisata.show', compact('wisata'));
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\wisata  $wisata
+     * @param  \App\Models\Wisata  $wisata
      * @return \Illuminate\Http\Response
      */
-    public function edit(wisata $wisata)
+    public function edit($id)
     {
         //
+        $wisata = Wisata::findOrFail($id);
+        return view('admin.wisata.edit', compact('wisata'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\wisata  $wisata
+     * @param  \App\Models\Wisata  $wisata
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, wisata $wisata)
+    public function update(Request $request, $id)
     {
         //
+        $validated = $request->validate([
+            'nama_wisata' => 'required',
+            'harga' => 'required',
+            'alamat' => 'required',
+        ]);
+
+        $wisata = Wisata::findOrFail($id);
+        $wisata->nama_wisata = $request->nama_wisata;
+        $wisata->harga = $request->harga;
+        $wisata->alamat = $request->alamat;
+        $wisata->save();
+        return redirect()->route('wisata.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\wisata  $wisata
+     * @param  \App\Models\Wisata  $wisata
      * @return \Illuminate\Http\Response
      */
-    public function destroy(wisata $wisata)
+    public function destroy($id)
     {
         //
+        $wisata = Wisata::findOrFail($id);
+        $wisata->delete();
+        return redirect()->route('wisata.index');
     }
 }

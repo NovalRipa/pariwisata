@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\wisata;
+use App\Models\destinasi;
 use Illuminate\Database\Seeder;
 
 class Destinasiseeder extends Seeder
@@ -13,6 +15,6 @@ class Destinasiseeder extends Seeder
      */
     public function run()
     {
-        //
+
     }
 }

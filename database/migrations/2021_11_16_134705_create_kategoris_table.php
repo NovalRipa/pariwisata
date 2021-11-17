@@ -15,11 +15,10 @@ class CreateKategorisTable extends Migration
     {
         Schema::create('kategoris', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('kelas_id')->unsigned();
-            $table->string('kelas');
+            $table->bigInteger('nama_id')->unsigned();
 
-            $table->foreign('kelas_id')->references('id')
-            ->on('destinasis')->onUpdate('cascade')
+            $table->foreign('nama_id')->references('id')
+            ->on('wisatas')->onUpdate('cascade')
             ->onDelete('cascade');
         $table->timestamps();
         });

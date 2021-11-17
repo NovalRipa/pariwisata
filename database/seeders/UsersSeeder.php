@@ -17,27 +17,27 @@ class UsersSeeder extends Seeder
     {
         $adminRole = new Role();
         $adminRole->name = "admin";
-        $adminRole->display_name = "Admin Larapus";
+        $adminRole->display_name = "Admin Pariwisata";
         $adminRole->save();
 
         //membuat the database seed.
         $memberRole = new Role();
         $memberRole->name = "member";
-        $memberRole->display_name = "Member Larapus";
+        $memberRole->display_name = "Member Pariwisata";
         $memberRole->save();
 
         $userAdmin = new User;
-        $userAdmin->name = "Admin Larapus";
-        $userAdmin->email = "adminlarapus@gmail.com";
-        $userAdmin->password = bcrypt("rahasia");
+        $userAdmin->name = "Admin Pariwisata";
+        $userAdmin->email = "adminPariwisatas@gmail.com";
+        $userAdmin->password = bcrypt("wisata");
         $userAdmin->save();
         $userAdmin->attachRole($adminRole);
 
         //membuat role member
         $userMember = new User;
-        $userMember->name = "Member Larapus";
+        $userMember->name = "Member Pariwisata";
         $userMember->email = "member@gmail.com";
-        $userMember->password = bcrypt("rahasia");
+        $userMember->password = bcrypt("wisata");
         $userMember->save();
         $userMember->attachRole($memberRole);
     }

@@ -15,12 +15,8 @@ class CreateDestinasisTable extends Migration
     {
         Schema::create('destinasis', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('alamat_id')->unsigned();
-            $table->text('alamat');
-
-            $table->foreign('alamat_id')->references('id')
-                ->on('wisatas')->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->string('nama_provinsi');
+            $table->string('nama_kota');
             $table->timestamps();
         });
     }

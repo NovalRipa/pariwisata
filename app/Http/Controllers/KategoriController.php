@@ -15,6 +15,8 @@ class KategoriController extends Controller
     public function index()
     {
         //
+        $kategori = Kategori::with('wisata')->get();
+        return view('admin.kategori.index', compact('kategori'));
     }
 
     /**
@@ -25,6 +27,8 @@ class KategoriController extends Controller
     public function create()
     {
         //
+        $wisata = Wisata::all();
+        return view('admin.kategori.create', compact('wisata'));
     }
 
     /**
@@ -36,6 +40,11 @@ class KategoriController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'nama_id' => 'required',
+        ]);
+        $kategori = new Kategori;
+        $kategori->nama_id = $request->nama_id;
     }
 
     /**
@@ -47,6 +56,8 @@ class KategoriController extends Controller
     public function show(kategori $kategori)
     {
         //
+        $kategori = Kategori::findOrFail($id);
+        return view('admin.kategori.show', compact('kategori'));
     }
 
     /**
@@ -58,6 +69,9 @@ class KategoriController extends Controller
     public function edit(kategori $kategori)
     {
         //
+        $kategori = Kategori::findOrFail($id);
+        $author = Author::all();
+        return view('admin.kategori.edit', compact('kategori', 'wisata'));
     }
 
     /**
@@ -70,6 +84,11 @@ class KategoriController extends Controller
     public function update(Request $request, kategori $kategori)
     {
         //
+        $request->validate([
+            'nama_id' => 'required',
+        ]);
+        $kategori = Kategori::findOrFail($id);
+        $kategori->nama_id = $request->nama_id;
     }
 
     /**
@@ -81,5 +100,9 @@ class KategoriController extends Controller
     public function destroy(kategori $kategori)
     {
         //
+        $kategori = Kategori::findOrFail($id);
+        $kategori->deleteImage();
+        $kategori->delete();
+        return redirect()->route('kategori.index');
     }
 }

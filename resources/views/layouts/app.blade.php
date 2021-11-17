@@ -80,7 +80,7 @@
         </main>
         <footer class="fixed-bottom">
             <center>
-                Copyright larapus-ripa - {{date('Y')}}
+                Copyright Informasi Wisata - {{date('Y')}}
             </center>
         </footer>
     </div>

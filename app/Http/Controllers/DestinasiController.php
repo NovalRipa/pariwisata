@@ -15,6 +15,8 @@ class DestinasiController extends Controller
     public function index()
     {
         //
+        $destinasi = Destinasi::all();
+        return view('admin.destinasi.index', compact('destinasi'));
     }
 
     /**
@@ -25,6 +27,7 @@ class DestinasiController extends Controller
     public function create()
     {
         //
+        return view('admin.destinasi.create');
     }
 
     /**
@@ -36,6 +39,16 @@ class DestinasiController extends Controller
     public function store(Request $request)
     {
         //
+        $validated = $request->validate([
+            'nama_provinsi' => 'required',
+            'nama_kota' => 'required',
+        ]);
+
+        $destinasi = new Destinasi;
+        $destinasi->nama_provinsi = $request->nama_provinsi;
+        $destinasi->nama_kota = $request->nama_kota;
+        $destinasi->save();
+        return redirect()->route('destinasi.index');
     }
 
     /**
@@ -47,6 +60,8 @@ class DestinasiController extends Controller
     public function show(destinasi $destinasi)
     {
         //
+        $destinasi = Destinasi::findOrFail($id);
+        return view('admin.destinasi.show', compact('destinasi'));
     }
 
     /**
@@ -58,6 +73,8 @@ class DestinasiController extends Controller
     public function edit(destinasi $destinasi)
     {
         //
+        $destinasi = Destinasi::findOrFail($id);
+        return view('admin.destinasi.edit', compact('destinasi'));
     }
 
     /**
@@ -70,6 +87,16 @@ class DestinasiController extends Controller
     public function update(Request $request, destinasi $destinasi)
     {
         //
+        $validated = $request->validate([
+            'nama_provinsi' => 'required',
+            'nama_kota' => 'required',
+        ]);
+
+        $destinasi = Destinasi::findOrFail($id);
+        $destinasi->nama_provinsi = $request->nama_provinsi;
+        $destinasi->nama_kota = $request->nama_kota;
+        $destinasi->save();
+        return redirect()->route('destinasi.index');
     }
 
     /**
@@ -81,5 +108,8 @@ class DestinasiController extends Controller
     public function destroy(destinasi $destinasi)
     {
         //
+        $destinasi = Destinasi::findOrFail($id);
+        $destinasi->delete();
+        return redirect()->route('destinasi.index');
     }
 }
