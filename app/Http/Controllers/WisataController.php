@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\wisata;
 use Illuminate\Http\Request;
 
-class WisataController extends Controller
+class wisataController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -40,14 +40,10 @@ class WisataController extends Controller
     {
         $validated = $request->validate([
             'nama_wisata' => 'required',
-            'nama_wisata' => 'required',
-            'harga' => 'required',
         ]);
 
         $wisata = new Wisata;
         $wisata->nama_wisata = $request->nama_wisata;
-        $wisata->harga = $request->harga;
-        $wisata->alamat = $request->alamat;
         $wisata->save();
         return redirect()->route('wisata.index');
     }
@@ -55,7 +51,7 @@ class WisataController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Wisata  $wisata
+     * @param  \App\Models\wisata  $wisata
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -69,7 +65,7 @@ class WisataController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Wisata  $wisata
+     * @param  \App\Models\wisata  $wisata
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -83,7 +79,7 @@ class WisataController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Wisata  $wisata
+     * @param  \App\Models\wisata  $wisata
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -91,14 +87,10 @@ class WisataController extends Controller
         //
         $validated = $request->validate([
             'nama_wisata' => 'required',
-            'harga' => 'required',
-            'alamat' => 'required',
         ]);
 
         $wisata = Wisata::findOrFail($id);
         $wisata->nama_wisata = $request->nama_wisata;
-        $wisata->harga = $request->harga;
-        $wisata->alamat = $request->alamat;
         $wisata->save();
         return redirect()->route('wisata.index');
     }
@@ -106,7 +98,7 @@ class WisataController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Wisata  $wisata
+     * @param  \App\Models\wisata  $wisata
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -9,14 +9,30 @@ class destinasi extends Model
 {
    //
    use HasFactory;
-
-    //memberikan akses field apa saja yang boleh di isi
-    protected $fillable = ['nama_provinsi', 'nama_kota'];
-
-    //memberikan akses field apa saja yang boleh di lihat
-    //atau di keluarkan
-    protected $visible = ['nama_provinsi', 'nama_kota'];
-
-    //mencatat waktu pembuatan & update data secara otomatis
+    protected $fillable = ['nama_provinsi','nama_kota','kategori','wisata_id', 'alamat','harga', 'cover'];
+    protected $visible = ['nama_provinsi','nama_kota','kategori','wisata_id', 'alamat', 'harga','cover'];
     public $timestamps = true;
+
+    //membuat relasi one to many dengan model "wisata"
+    public function wisata()
+    {
+        //data Model 'destinasi' bisa dimiliki oleh Model 'Author'
+        //melalui fk "wisata-id"
+        return $this->belongsTo('App\Models\wisata', 'wisata_id');
+    }
+    public function image()
+    {
+        if ($this->cover && file_exists(public_path('images/destinasis/' .$this->cover))){
+            return asset('images/destinasis/' .$this->cover);
+        } else {
+            return asset('images/no_image.png');
+        }
+    }
+
+    public function deleteImage()
+    {
+        if ($this->cover && file_exists(public_path('images/destinasis/' . $this->cover))) {
+            return unlink(public_path('images/destinasis/' . $this->cover));
+        }
+    }
 }

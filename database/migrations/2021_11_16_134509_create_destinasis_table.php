@@ -17,6 +17,15 @@ class CreateDestinasisTable extends Migration
             $table->id();
             $table->string('nama_provinsi');
             $table->string('nama_kota');
+            $table->bigInteger('wisata_id')->unsigned();
+            $table->string('kategori');
+            $table->integer('harga')->unsigned();
+            $table->text('alamat');
+            $table->string('cover')->nullable();
+
+            $table->foreign('wisata_id')->references('id')
+            ->on('wisatas')->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }

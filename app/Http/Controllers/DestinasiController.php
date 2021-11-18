@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\wisata;
 use App\Models\destinasi;
 use Illuminate\Http\Request;
 
-class DestinasiController extends Controller
+class destinasiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,10 @@ class DestinasiController extends Controller
      */
     public function index()
     {
-        //
-        $destinasi = Destinasi::all();
+        // mengambil data 'destinasi' dan juga 'author'
+        // yang berelasi melalui method 'author'
+        // yang berasal dari model 'destinasi'
+        $destinasi = Destinasi::with('wisata')->get();
         return view('admin.destinasi.index', compact('destinasi'));
     }
 
@@ -26,8 +29,9 @@ class DestinasiController extends Controller
      */
     public function create()
     {
-        //
-        return view('admin.destinasi.create');
+        //memngambil author
+        $wisata = Wisata::all();
+        return view('admin.destinasi.create', compact('wisata'));
     }
 
     /**
@@ -39,14 +43,29 @@ class DestinasiController extends Controller
     public function store(Request $request)
     {
         //
-        $validated = $request->validate([
+        $request->validate([
             'nama_provinsi' => 'required',
             'nama_kota' => 'required',
+            'kategori'=>'required',
+            'alamat' => 'required',
+            'harga'=>'required',
+            'wisata_id' => 'required',
+            'cover' => 'required|image|max:2048',
         ]);
-
         $destinasi = new Destinasi;
         $destinasi->nama_provinsi = $request->nama_provinsi;
         $destinasi->nama_kota = $request->nama_kota;
+        $destinasi->kategori = $request->kategori;
+        $destinasi->harga = $request->harga;
+        $destinasi->wisata_id = $request->wisata_id;
+        // upload image / foto
+        if ($request->hasFile('cover')) {
+            $image = $request->file('cover');
+            $name = rand(1000, 9999) . $image->getClientOriginalName();
+            $image->move('images/destinasis/', $name);
+            $destinasi->cover = $name;
+        }
+        $destinasi->alamat = $request->alamat;
         $destinasi->save();
         return redirect()->route('destinasi.index');
     }
@@ -57,7 +76,7 @@ class DestinasiController extends Controller
      * @param  \App\Models\destinasi  $destinasi
      * @return \Illuminate\Http\Response
      */
-    public function show(destinasi $destinasi)
+    public function show($id)
     {
         //
         $destinasi = Destinasi::findOrFail($id);
@@ -70,11 +89,12 @@ class DestinasiController extends Controller
      * @param  \App\Models\destinasi  $destinasi
      * @return \Illuminate\Http\Response
      */
-    public function edit(destinasi $destinasi)
+    public function edit($id)
     {
         //
         $destinasi = Destinasi::findOrFail($id);
-        return view('admin.destinasi.edit', compact('destinasi'));
+        $wisata = Wisata::all();
+        return view('admin.destinasi.edit', compact('destinasi', 'wisata'));
     }
 
     /**
@@ -84,17 +104,30 @@ class DestinasiController extends Controller
      * @param  \App\Models\destinasi  $destinasi
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, destinasi $destinasi)
+    public function update(Request $request, $id)
     {
         //
-        $validated = $request->validate([
+        $request->validate([
             'nama_provinsi' => 'required',
-            'nama_kota' => 'required',
+            'nama_kota'=> 'required',
+            'kategori'=>'required',
+            'alamat' => 'required',
+            'harga'=>'required',
+            'wisata_id' => 'required',
         ]);
-
         $destinasi = Destinasi::findOrFail($id);
         $destinasi->nama_provinsi = $request->nama_provinsi;
         $destinasi->nama_kota = $request->nama_kota;
+        $destinasi->wisata_id = $request->wisata_id;
+        // upload image / foto
+        if ($request->hasFile('cover')) {
+            $destinasi->deleteImage();
+            $image = $request->file('cover');
+            $name = rand(1000, 9999) . $image->getClientOriginalName();
+            $image->move('images/destinasis/', $name);
+            $destinasi->cover = $name;
+        }
+        $destinasi->alamat = $request->alamat;
         $destinasi->save();
         return redirect()->route('destinasi.index');
     }
@@ -105,10 +138,11 @@ class DestinasiController extends Controller
      * @param  \App\Models\destinasi  $destinasi
      * @return \Illuminate\Http\Response
      */
-    public function destroy(destinasi $destinasi)
+    public function destroy($id)
     {
         //
-        $destinasi = Destinasi::findOrFail($id);
+        $destinasi = destinasi::findOrFail($id);
+        $destinasi->deleteImage();
         $destinasi->delete();
         return redirect()->route('destinasi.index');
     }
