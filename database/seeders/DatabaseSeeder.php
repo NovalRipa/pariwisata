@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             UsersSeeder::class,
             Destinasiseeder::class,
             Wisataseeder::class,
+            Contactseeder::class,
         ]);
         //jalankan perintah
         // php artisan migrate:fresh --seed

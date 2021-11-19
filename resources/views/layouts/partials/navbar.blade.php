@@ -1,14 +1,25 @@
 <nav class="main-header navbar navbar-expand navbar-navy">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="fonts/antonio-exotic/stylesheet.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/lightbox.min.css">
+    <link href="css/responsive.css" rel="stylesheet">
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="js/lightbox-plus-jquery.min.js" type="text/javascript"></script>
+    <script src="js/instafeed.min.js" type="text/javascript"></script>
+    <script src="js/custom.js" type="text/javascript"></script>
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="home" class="nav-link">Home</a>
+        <a href="" class="nav-link">Home</a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
       </li>
     </ul>
 
